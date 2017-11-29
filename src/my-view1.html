@@ -27,26 +27,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <bind-expanded-items></bind-expanded-items>
 <dom-module id="my-view1">
   <template>
-    <style  include="bootstrap-styles">
+    <style include="shared-styles">
       :host {
         display: block;
       }
 
       .icon-img-start {
-        position: absolute; 
-        top: 10px; 
-        left: 10px; 
-        width: 70px; 
-        height: 70px; 
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 70px;
+        height: 70px;
         color: black;
       }
 
       .icon-img-edit {
-        position: absolute; 
-        top: 10px; 
-        right: 10px; 
-        width: 50px; 
-        height: 50px; 
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 50px;
+        height: 50px;
         color: black;
       }
 
@@ -171,8 +171,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
-<!--     <iron-ajax auto 
-      handle-as="json" 
+<!--     <iron-ajax auto
+      handle-as="json"
       url="/src/data/getDecisionTrees.php"
       on-response="_handleResponse"></iron-ajax> -->
 
@@ -181,6 +181,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         id="srch-bar"
         filter-types-url="/src/data/wtSrchBar.php">
       </wt-srch-bar> -->
+      <div class="card">
       <vaadin-grid on-active-item-changed="_onActiveItemChanged" id="grid" items="[[data]]" size="300" style="height: auto;">
 
         <template class="row-details">
@@ -282,7 +283,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
           })
         });
-        
+
 
       }
 

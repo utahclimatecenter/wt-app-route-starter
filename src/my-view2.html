@@ -24,6 +24,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 
+<link rel="import" href="../bower_components/wt-highcharts/wt-highcharts.html">
+
 
 <link rel="import" href="shared-styles.html">
 
@@ -33,13 +35,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
         padding: 10px;
-      }
-
-      .submit-button {
-        margin-top: 10px;
-        background-color: green;
-        color: white;
-        float: right;
       }
 
       .clearfix:after {
@@ -53,64 +48,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       * html .clearfix             { zoom: 1; } /* IE6 */
       *:first-child+html .clearfix { zoom: 1; } /* IE7 */
 
-   
-  paper-dialog-lite{
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    background: white;
-    @apply --layout-horizontal;
-    @apply --layout-center-center;
-    color: #2196F3;
-    box-shadow: 0 12px 16px 1px rgba(0, 0, 0, 0.14),
-    0 4px 22px 3px rgba(0, 0, 0, 0.12),
-    0 6px 7px -4px rgba(0, 0, 0, 0.4);
-  
-    font-size: 18px;
-    text-align: center;
-  }
 
     </style>
 
-    <iron-ajax
-      id="add-ajax"
-      handle-as="json" 
-      url="/src/data/addEdit.php"
-      on-response="_handleAddResponse"
-      debounce-duration="300">
-    </iron-ajax>
-
-    <app-route
-      id="app-route"
-      route="{{route}}"
-      pattern="/:id"
-      data="{{routeData}}"></app-route>
-
-    <iron-ajax id="load-ajax"
-        on-response="_loadExpertSystem"></iron-ajax>
-
     <div class="card">
-      <iron-form id="iron-form">
-
-        <paper-input id="name" required label="Enter Name">
-        </paper-input>
-
-        <div class="clearfix" style="width:100%; white-space:nowrap;">
-<!--           <span style="display: inline-block; vertical-align: top; width:105px">
-            <div id="myPaletteDiv" style="border: solid 1px black; height: 620px"></div>
-          </span> -->
-
- 
-
-          <div id="myOverviewDiv" style="position: absolute; border: solid 1px blue; width: 100px; height: 90px; left: 50px; background-color: aliceblue; z-index: 1000;">
-          </div> 
-          <div id="sample">
-            <span style="position: relative; display: inline-block; vertical-align: top; width:100%">
-              <div id="myDiagramDiv" style="border: solid 1px black; height: 520px"></div>
-            </span>
-          </div>
-          <paper-button id="submit-button" raised class="submit-button">Save</paper-button>
-        <div>    
-
-    </iron-form>
+        <wt-highchart
+          unique-name="wt-highchart1"
+          title="Example Highchart"
+          group-by='["gender", "eyeColor", "favoriteFruit", "name"]'
+          download-fields='{"name": "Employee", "age": "Age", "eyeColor": "Eye Color", "gender":"Sex", "phone": "Phone", "address": "Address"}'
+          url="/web-components/wt-app-route-starter/src/data/flat_data.txt"
+          wt-srch-bar-filter-types-url="/web-components/wt-app-route-starter/src/data/master-combo.txt"
+          wt-srch-bar-default-srch="as-of-date"
+          start-date="2017-01-01">
+        </wt-highchart>
+    </div>
 
   </template>
 
@@ -121,22 +73,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       constructor() {
         super();
         console.log("constructor...");
-      }
-
-      _profileUrlForUser(id) {
-        var loadAjax = Polymer.dom(this.root).querySelector('#load-ajax');
-        var url = "";
-        if (typeof id !== 'undefined') {
-          var url = "/src/data/getDecisionTrees.php?id="+id;
-          loadAjax.auto = true;
-        } else {
-          loadAjax.auto = false;
-        }
-        return url;
-      }
-
-      _loadExpertSystem(e,a,b) {
-        console.log(e,a,b)
       }
 
       connectedCallback() {

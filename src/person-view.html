@@ -27,14 +27,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <bind-expanded-items></bind-expanded-items>
 <dom-module id="person-view">
   <template>
-    <style  include="bootstrap-styles">
+    <style include="shared-styles">
       :host {
         display: block;
       }
 
     </style>
 
-    <h1>PersonId=[[personId]]</h1>
+    <div class="card">
+      <h1>PersonId=[[personId]]</h1>
+    </div>
 
   </template>
 

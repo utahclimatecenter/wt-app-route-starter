@@ -115,9 +115,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-icon-button id="toggleMain" icon="menu"></paper-icon-button>
           <div main-title></div>
         </div>
-        <div id="personHeader">
+        <div  id="personHeader">
           <paper-icon-button id="togglePerson" icon="menu"></paper-icon-button>
-          <div main-title><a href="[[rootPath]]/#/main/view1/">Home</a> &nbsp; > &nbsp; Person</div>
+          <div style="display: inline" main-title><a href="[[rootPath]]/#/main/view2/">Home</a> &nbsp; > &nbsp; Person</div>
         </div>
         <div spacer main-title></div>
         <paper-icon-button id="search" icon="search"></paper-icon-button>
@@ -188,8 +188,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </app-drawer-layout>
 
 
-    <app-drawer-layout id="drawerRight">
-    <app-drawer slot="drawer"  style="--app-drawer-width: 310px;"  align="right" swipe-open>
+    <app-drawer-layout id="drawerRightLayout">
+    <app-drawer id="drawerRight" slot="drawer"  style="--app-drawer-width: 310px;"  align="right" swipe-open>
     <div class="drawer-content">
         <wt-srch-grid
           id="wt-srch-grid"
@@ -249,6 +249,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       connectedCallback() {
         super.connectedCallback();
         var me = this;
+        var personDrawer = Polymer.dom(me.root).querySelector('#personDrawer');
+        var drawerRight = Polymer.dom(me.root).querySelector('#drawerRight');
+        var mainDrawer = Polymer.dom(me.root).querySelector('#mainDrawer');
+
+        var mainHeader = Polymer.dom(me.root).querySelector('#mainHeader');
+        var personHeader = Polymer.dom(me.root).querySelector('#personHeader');
+
+        personDrawer.hidden = true;
+        personHeader.hidden = true;
+        mainDrawer.hidden = false;
+        mainHeader.hidden = false;
 
         var mainDrawerLayout = Polymer.dom(me.root).querySelector('#mainDrawerLayout');
         me.$.toggleMain.addEventListener('click', function() {
@@ -268,12 +279,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         });
 
-        var drawerRight = Polymer.dom(me.root).querySelector('#drawerRight');
+        var drawerRightLayout = Polymer.dom(me.root).querySelector('#drawerRightLayout');
         me.$.search.addEventListener('click', function() {
-          if (drawerRight.forceNarrow || !drawerRight.narrow) {
-            drawerRight.forceNarrow = !drawerRight.forceNarrow;
+          if (drawerRightLayout.forceNarrow || !drawerRightLayout.narrow) {
+            drawerRightLayout.forceNarrow = !drawerRightLayout.forceNarrow;
           } else {
-            drawerRight.drawer.toggle();
+            drawerRightLayout.drawer.toggle();
           }
         });
       }
@@ -281,11 +292,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // If the url changes this function is called.
       _routeChanged(routeObj) {
         var me = this;
+        var drawerRight = Polymer.dom(me.root).querySelector('#drawerRight');
         var personDrawer = Polymer.dom(me.root).querySelector('#personDrawer');
         var mainDrawer = Polymer.dom(me.root).querySelector('#mainDrawer');
 
         var mainHeader = Polymer.dom(me.root).querySelector('#mainHeader');
         var personHeader = Polymer.dom(me.root).querySelector('#personHeader');
+        var personDrawerLayout = Polymer.dom(me.root).querySelector('#personDrawerLayout');
+        var mainDrawerLayout = Polymer.dom(me.root).querySelector('#mainDrawerLayout');
+        var drawerRightLayout = Polymer.dom(me.root).querySelector('#drawerRightLayout');
 
         if (typeof routeObj.value.path != 'undefined') {
           var hashPath = routeObj.value.path.split("/");
@@ -310,6 +325,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     default:
                      alert("Invalid URL");
                   }
+                  drawerRightLayout.drawer.close();
+                  drawerRight.close();
+                  // personDrawerLayout.drawer.close();
+                  // personDrawer.close();
+                  // mainDrawerLayout.drawer.close();
+                  // mainDrawer.close();
                   break;
               case 'person':
                   // (1) Show person menu
@@ -325,6 +346,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     default:
                      alert("Invalid URL");
                   }
+                  drawerRightLayout.drawer.close();
+                  drawerRight.close();
+                  // personDrawerLayout.drawer.close();
+                  // personDrawer.close();
+                  // mainDrawerLayout.drawer.close();
+                  // mainDrawer.close();
                   break;
               default:
                   //alert("Invalid URL");
