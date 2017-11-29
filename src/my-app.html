@@ -117,7 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div  id="personHeader">
           <paper-icon-button id="togglePerson" icon="menu"></paper-icon-button>
-          <div style="display: inline" main-title><a href="[[rootPath]]/#/main/view2/">Home</a> &nbsp; > &nbsp; Person</div>
+          <div style="display: inline" main-title><a href="[[rootPath]]/#/main/view2/">Home</a> &nbsp; > &nbsp; [[personId]]</div>
         </div>
         <div spacer main-title></div>
         <paper-icon-button id="search" icon="search"></paper-icon-button>
@@ -292,6 +292,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             drawerRightLayout.drawer.toggle();
           }
         });
+
+        me.addEventListener('wt-person-loaded', function(e) {
+            console.log(e.detail.person_id);
+            me.personId = e.detail.person_id;
+        });
       }
 
       // If the url changes this function is called.
@@ -332,6 +337,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   }
                   drawerRightLayout.drawer.close();
                   drawerRight.close();
+                  drawerRightLayout.forceNarrow = true;
                   // personDrawerLayout.drawer.close();
                   // personDrawer.close();
                   // mainDrawerLayout.drawer.close();
@@ -353,6 +359,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   }
                   drawerRightLayout.drawer.close();
                   drawerRight.close();
+                  drawerRightLayout.forceNarrow = true;
                   // personDrawerLayout.drawer.close();
                   // personDrawer.close();
                   // mainDrawerLayout.drawer.close();

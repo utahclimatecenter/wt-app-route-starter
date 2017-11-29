@@ -50,7 +50,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return {
           personId: {
             type: String,
-            reflectToAttribute: true
+            reflectToAttribute: true,
+            // HERE (2):  Watch for changes - call function when changes occur
+            observer: '_personChanged'
           }
         };
       }
@@ -60,11 +62,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log("constructor...");
       }
 
-
+      ready() {
+          super.ready();
+          console.log("ready");
+      }
 
       connectedCallback() {
         super.connectedCallback();
         var me = this;
+
+      }
+
+      _personChanged(newValue,oldValue) {
+        var me = this;
+
+        // HERE (3) - throw a custom event showing the person_id/name
+        me.dispatchEvent(new CustomEvent('wt-person-loaded', {
+          bubbles: true,
+          composed: true,
+          person_id: me.personId,
+          detail: {
+            target: me._target,
+            person_id: me.personId,
+          }
+        }));
       }
 
     }
