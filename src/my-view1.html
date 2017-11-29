@@ -171,16 +171,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
-    <iron-ajax auto 
+<!--     <iron-ajax auto 
       handle-as="json" 
       url="/src/data/getDecisionTrees.php"
-      on-response="_handleResponse"></iron-ajax>
+      on-response="_handleResponse"></iron-ajax> -->
 
-    <div class="card">
+<!--     <div class="card">
       <wt-srch-bar
         id="srch-bar"
         filter-types-url="/src/data/wtSrchBar.php">
-      </wt-srch-bar>
+      </wt-srch-bar> -->
       <vaadin-grid on-active-item-changed="_onActiveItemChanged" id="grid" items="[[data]]" size="300" style="height: auto;">
 
         <template class="row-details">
@@ -225,6 +225,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     class MyView1 extends Polymer.Element {
       static get is() { return 'my-view1'; }
+
+      static get properties() {
+        return {
+          programId: {
+            type: String,
+            reflectToAttribute: true
+          }
+        };
+      }
 
       constructor() {
         super();

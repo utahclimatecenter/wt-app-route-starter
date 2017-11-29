@@ -22,13 +22,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<!-- <link rel="import" href="../bower_components/paper-spinner/paper-spinner.html"> -->
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/wt-srch-grid/wt-srch-grid.html">
 
 <link rel="lazy-import" href="my-view1.html">
 <link rel="lazy-import" href="my-view2.html">
-<link rel="lazy-import" href="my-view3.html">
+<link rel="lazy-import" href="person-view.html">
 <link rel="lazy-import" href="my-view404.html">
 
 <dom-module id="my-app">
@@ -91,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       app-drawer {
-        --app-drawer-width: 330px;
+       /* --app-drawer-width: 330px;*/
         --app-drawer-content-container: {
           background-color: white;
           /*background-color: lightblue;*/
@@ -105,66 +105,91 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     </style>
 
-    <app-location use-hash-as-path route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
-    <app-route
-        route="{{route}}"
-        pattern="[[rootPath]]:page"
-        data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
+    <app-location use-hash-as-path route="{{route}}" ></app-location>
 
   <app-header-layout>
 
     <app-header fixed effects="waterfall" slot="header">
       <app-toolbar>
-        <paper-icon-button id="toggle" icon="menu"></paper-icon-button>
-        <div main-title>Menu</div>
+        <div id="mainHeader">
+          <paper-icon-button id="toggleMain" icon="menu"></paper-icon-button>
+          <div main-title></div>
+        </div>
+        <div id="personHeader">
+          <paper-icon-button id="togglePerson" icon="menu"></paper-icon-button>
+          <div main-title><a href="[[rootPath]]/#/main/view1/">Home</a> &nbsp; > &nbsp; Person</div>
+        </div>
+        <div spacer main-title></div>
         <paper-icon-button id="search" icon="search"></paper-icon-button>
         <paper-icon-button id="more" icon="more-vert"></paper-icon-button>
       </app-toolbar>
- <!-- Second toolbar - if needed -->
-<!--     <app-toolbar>
+      <!-- Second toolbar - if needed -->
+      <!--     <app-toolbar>
       <div spacer main-title>My Drive</div>
     </app-toolbar> -->
     </app-header>
 
-    <app-drawer-layout id="drawerLayout">
+    <app-drawer-layout id="personDrawerLayout">
 
-      <app-drawer id="drawer" slot="drawer">
+
+      <app-drawer id="personDrawer" slot="drawer">
         <div class="drawer-content">
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <paper-icon-item>
-            <iron-icon icon="inbox" slot="item-icon"></iron-icon> <a name="view1" href="[[rootPath]]#/view1" route="{{subroute}}">Inbox</a>
+            <iron-icon icon="inbox" slot="item-icon"></iron-icon> <a name="person-view1" href="[[rootPath]]#/person/person-view1">Inbox</a>
+          </paper-icon-item>    
+          <paper-icon-item>
+            <iron-icon icon="inbox" slot="item-icon"></iron-icon> <a name="person-view2" href="[[rootPath]]#/person/person-view2">Sent</a>
+          </paper-icon-item>              
+        </iron-selector>
+        </div>
+      </app-drawer>
+
+    <iron-pages
+        selected="[[page]]"
+        attr-for-selected="name"
+        fallback-selection="view404"
+        role="main">
+      <person-view person-id="{{person}}" name="person-view1"></person-view>
+      <my-view404 name="view404"></my-view404>
+    </iron-pages>
+
+    </app-drawer-layout>
+
+
+    <app-drawer-layout id="mainDrawerLayout">
+      <app-drawer id="mainDrawer" slot="drawer">
+        <div class="drawer-content">
+        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <paper-icon-item>
+            <iron-icon icon="inbox" slot="item-icon"></iron-icon> <a name="view1" href="[[rootPath]]#/main/view2">Dashboard</a>
           </paper-icon-item>
           <paper-icon-item>
-            <iron-icon icon="done" slot="item-icon"></iron-icon> <a name="view2" href="[[rootPath]]#/view2" route="{{subroute}}">Done</a>
+            <iron-icon icon="done" slot="item-icon"></iron-icon> <a name="view2" href="[[rootPath]]#/main/view1">Reports</a>
           </paper-icon-item>
           <paper-icon-item>
-            <iron-icon icon="send" slot="item-icon"></iron-icon> <a name="view3" href="[[rootPath]]#/view3" route="{{subroute}}">Send</a>
-          </paper-icon-item>
-          <paper-icon-item>
-            <iron-icon icon="delete" slot="item-icon"></iron-icon> <a name="view3" href="[[rootPath]]#/view3" route="{{subroute}}">Delete</a>
-          </paper-icon-item>          
+            <iron-icon icon="send" slot="item-icon"></iron-icon> <a name="view3" href="[[rootPath]]#/main/view3">Maintenance</a>
+          </paper-icon-item>         
           
         </iron-selector>
         </div>
       </app-drawer>
 
-      <iron-pages
-          selected="[[page]]"
-          attr-for-selected="name"
-          fallback-selection="view404"
-          role="main">
-        <my-view1 name="view1"></my-view1>
-        <my-view2 name="view2"></my-view2>
-        <my-view3 name="view3"></my-view3>
-        <my-view404 name="view404"></my-view404>
-      </iron-pages>
-
+    <iron-pages
+        selected="[[page]]"
+        attr-for-selected="name"
+        fallback-selection="view404"
+        role="main">
+      <my-view1 name="view1"></my-view1>
+      <my-view2 name="view2"></my-view2>
+      <my-view404 name="view404"></my-view404>
+    </iron-pages>
 
     </app-drawer-layout>
 
+
     <app-drawer-layout id="drawerRight">
-    <app-drawer slot="drawer"  align="right" swipe-open>
+    <app-drawer slot="drawer"  style="--app-drawer-width: 310px;"  align="right" swipe-open>
     <div class="drawer-content">
         <wt-srch-grid
           id="wt-srch-grid"
@@ -174,8 +199,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           "index": "index",
                           "name": "name",
                           "description": "Name",
-                          "href": "https:\/\/www.google.com",
-                          "params": { "programId": "pa_program_id"},
+                          "href": "wt-app-route-starter",
+                          "hashpath": "person/person-view1/#-_id-#",
                           "sort": "asc",
                           "target": ""
                         },
@@ -209,26 +234,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return {
           page: {
             type: String,
-            reflectToAttribute: true,
-            observer: '_pageChanged',
+            reflectToAttribute: true
           },
-          routeData: Object,
-          subroute: String,
-          // This shouldn't be neccessary, but the Analyzer isn't picking up
-          // Polymer.Element#rootPath
-          rootPath: String,
+          rootPath: String
         };
+      }
+
+      static get observers() {
+        return [
+          '_routeChanged(route.*)'
+        ];
       }
 
       connectedCallback() {
         super.connectedCallback();
         var me = this;
-        var drawerLayout = Polymer.dom(me.root).querySelector('#drawerLayout');
-        me.$.toggle.addEventListener('click', function() {
-          if (drawerLayout.forceNarrow || !drawerLayout.narrow) {
-            drawerLayout.forceNarrow = !drawerLayout.forceNarrow;
+
+        var mainDrawerLayout = Polymer.dom(me.root).querySelector('#mainDrawerLayout');
+        me.$.toggleMain.addEventListener('click', function() {
+          if (mainDrawerLayout.forceNarrow || !mainDrawerLayout.narrow) {
+            mainDrawerLayout.forceNarrow = !mainDrawerLayout.forceNarrow;
           } else {
-            drawerLayout.drawer.toggle();
+            mainDrawerLayout.drawer.toggle();
+          }
+        });
+
+        var personDrawerLayout = Polymer.dom(me.root).querySelector('#personDrawerLayout');
+        me.$.togglePerson.addEventListener('click', function() {
+          if (personDrawerLayout.forceNarrow || !personDrawerLayout.narrow) {
+            personDrawerLayout.forceNarrow = !personDrawerLayout.forceNarrow;
+          } else {
+            personDrawerLayout.drawer.toggle();
           }
         });
 
@@ -242,31 +278,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       }
 
-      static get observers() {
-        return [
-          '_routePageChanged(routeData.page)',
-        ];
-      }
+      // If the url changes this function is called.
+      _routeChanged(routeObj) {
+        var me = this;
+        var personDrawer = Polymer.dom(me.root).querySelector('#personDrawer');
+        var mainDrawer = Polymer.dom(me.root).querySelector('#mainDrawer');
 
-      _routePageChanged(page) {
-        // If no page was found in the route data, page will be an empty string.
-        // Deault to 'view1' in that case.
-        this.page = page || 'view1';
+        var mainHeader = Polymer.dom(me.root).querySelector('#mainHeader');
+        var personHeader = Polymer.dom(me.root).querySelector('#personHeader');
 
-        // Close a non-persistent drawer when the page & route are changed.
-        if (!this.$.drawer.persistent) {
-          this.$.drawer.close();
+        if (typeof routeObj.value.path != 'undefined') {
+          var hashPath = routeObj.value.path.split("/");
+          var resolvedPageUrl = "";  
+          switch(hashPath[1]) {
+              case 'main':
+                  // (1) Show main menu
+                  personDrawer.hidden = true;
+                  personHeader.hidden = true;
+                  mainDrawer.hidden = false;
+                  mainHeader.hidden = false;
+
+                  switch(hashPath[2]) {
+                    case 'view1':
+                      resolvedPageUrl = this.resolveUrl('my-view1.html');
+                      //window.history.pushState({}, null, me.rootPath+'#/main/view1');
+                      //window.dispatchEvent(new CustomEvent('location-changed'));
+                      break;
+                    case 'view2':
+                      resolvedPageUrl = this.resolveUrl('my-view2.html');
+                      break;
+                    default:
+                     alert("Invalid URL");
+                  }
+                  break;
+              case 'person':
+                  // (1) Show person menu
+                  personDrawer.hidden = false;
+                  personHeader.hidden = false;
+                  mainDrawer.hidden = true;
+                  mainHeader.hidden = true;
+
+                  switch(hashPath[2]) {
+                    case 'person-view1':
+                      resolvedPageUrl = this.resolveUrl('person-view.html');
+                      break;
+                    default:
+                     alert("Invalid URL");
+                  }
+                  break;
+              default:
+                  //alert("Invalid URL");
+          }  
+
+          // Lets fetch the page now.
+          if (resolvedPageUrl.length > 0) {
+            Polymer.importHref(
+              resolvedPageUrl,
+              null,
+              this._showPage404.bind(this),
+              true); 
+
+            // Finally, change the page name -- and set person id
+            me.page = hashPath[2];
+            me.person = hashPath[3];
+          }    
         }
-      }
 
-      _pageChanged(page) {
-        // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
-        Polymer.importHref(
-            resolvedPageUrl,
-            null,
-            this._showPage404.bind(this),
-            true);
       }
 
       _showPage404() {

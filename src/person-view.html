@@ -1,0 +1,73 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+
+<link rel="import" href="../bower_components/wt-srch-bar/wt-srch-bar.html">
+<link rel="import" href="../bower_components/wt-bootstrap-styles/wt-bootstrap-styles.html">
+
+<link rel="import" href="shared-styles.html">
+
+
+<bind-expanded-items></bind-expanded-items>
+<dom-module id="person-view">
+  <template>
+    <style  include="bootstrap-styles">
+      :host {
+        display: block;
+      }
+
+    </style>
+
+    <h1>PersonId=[[personId]]</h1>
+
+  </template>
+
+
+  <script>
+
+    class MyPersonView extends Polymer.Element {
+      static get is() { return 'person-view'; }
+
+      static get properties() {
+        return {
+          personId: {
+            type: String,
+            reflectToAttribute: true
+          }
+        };
+      }
+
+      constructor() {
+        super();
+        console.log("constructor...");
+      }
+
+
+
+      connectedCallback() {
+        super.connectedCallback();
+        var me = this;
+      }
+
+    }
+
+    window.customElements.define(MyPersonView.is, MyPersonView);
+  </script>
+</dom-module>
+
