@@ -103,12 +103,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       height: calc(100% - 80px);
       overflow: auto;
     }
-    </style>
+  </style>
 
-    <app-location use-hash-as-path route="{{route}}" ></app-location>
+  <!-- APP-LOCATION - use-hash-as-path   to use hash tags as path -->
+  <app-location use-hash-as-path route="{{route}}" ></app-location>
 
+  <!--============-->
+  <!-- TOOLBARS   -->
+  <!--============-->
   <app-header-layout>
-
     <app-header fixed effects="waterfall" slot="header">
       <app-toolbar>
         <div id="mainHeader">
@@ -129,9 +132,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </app-toolbar> -->
     </app-header>
 
+
+    <!--===============-->
+    <!-- DRAWERS       -->
+    <!--===============-->
+
+    <!-- PERSON DRAWER-->
     <app-drawer-layout id="personDrawerLayout">
-
-
       <app-drawer id="personDrawer" slot="drawer">
         <div class="drawer-content">
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
@@ -156,7 +163,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </app-drawer-layout>
 
-
+    <!-- MAIN DRAWER-->
     <app-drawer-layout id="mainDrawerLayout">
       <app-drawer id="mainDrawer" slot="drawer">
         <div class="drawer-content">
@@ -192,7 +199,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </app-drawer-layout>
 
-
+    <!-- RIGHT DRAWER-->
     <app-drawer-layout id="drawerRightLayout">
     <app-drawer id="drawerRight" slot="drawer"  style="--app-drawer-width: 310px;"  align="right" swipe-open>
     <div class="drawer-content">
@@ -261,11 +268,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var mainHeader = Polymer.dom(me.root).querySelector('#mainHeader');
         var personHeader = Polymer.dom(me.root).querySelector('#personHeader');
 
+        // Start off with mainDrawer and mainHeader showing.
         personDrawer.hidden = true;
         personHeader.hidden = true;
         mainDrawer.hidden = false;
         mainHeader.hidden = false;
 
+        // DRAWER TOGGLING:   Takes into account if the drawer is narrow or not.
         var mainDrawerLayout = Polymer.dom(me.root).querySelector('#mainDrawerLayout');
         me.$.toggleMain.addEventListener('click', function() {
           if (mainDrawerLayout.forceNarrow || !mainDrawerLayout.narrow) {
@@ -293,13 +302,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         });
 
+        // HERE(1):  Listen for person-loaded event and update header.
         me.addEventListener('wt-person-loaded', function(e) {
             console.log(e.detail.person_id);
             me.personId = e.detail.person_id;
         });
       }
 
-      // If the url changes this function is called.
+      // Instead of Using APP-ROUTE -- I have found this to be more flexible and easy to use
       _routeChanged(routeObj) {
         var me = this;
         var drawerRight = Polymer.dom(me.root).querySelector('#drawerRight');
@@ -315,19 +325,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (typeof routeObj.value.path != 'undefined') {
           var hashPath = routeObj.value.path.split("/");
           var resolvedPageUrl = "";
+
+          // SWITCH on menu position - in this case "main" or "person" are the two menues
           switch(hashPath[1]) {
               case 'main':
-                  // (1) Show main menu
+                  // Hide Person menu/header and Show main menu/header
                   personDrawer.hidden = true;
                   personHeader.hidden = true;
                   mainDrawer.hidden = false;
                   mainHeader.hidden = false;
 
+                  // SWITCH on view position - in this case we have two views "view1" and "view2"
                   switch(hashPath[2]) {
                     case 'view1':
                       resolvedPageUrl = this.resolveUrl('my-view1.html');
-                      //window.history.pushState({}, null, me.rootPath+'#/main/view1');
-                      //window.dispatchEvent(new CustomEvent('location-changed'));
                       break;
                     case 'view2':
                       resolvedPageUrl = this.resolveUrl('my-view2.html');
@@ -338,18 +349,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   drawerRightLayout.drawer.close();
                   drawerRight.close();
                   drawerRightLayout.forceNarrow = true;
-                  // personDrawerLayout.drawer.close();
-                  // personDrawer.close();
-                  // mainDrawerLayout.drawer.close();
-                  // mainDrawer.close();
                   break;
               case 'person':
-                  // (1) Show person menu
+                  // Show person menu/header and Hide main menu/header
                   personDrawer.hidden = false;
                   personHeader.hidden = false;
                   mainDrawer.hidden = true;
                   mainHeader.hidden = true;
 
+                  // SWITCH on view position - in this case we have two one view "person-view1"
                   switch(hashPath[2]) {
                     case 'person-view1':
                       resolvedPageUrl = this.resolveUrl('person-view.html');
@@ -360,16 +368,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   drawerRightLayout.drawer.close();
                   drawerRight.close();
                   drawerRightLayout.forceNarrow = true;
-                  // personDrawerLayout.drawer.close();
-                  // personDrawer.close();
-                  // mainDrawerLayout.drawer.close();
-                  // mainDrawer.close();
                   break;
               default:
                   //alert("Invalid URL");
           }
 
-          // Lets fetch the page now.
+          // Lets fetch the page now that they called for it.
           if (resolvedPageUrl.length > 0) {
             Polymer.importHref(
               resolvedPageUrl,
@@ -378,6 +382,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               true);
 
             // Finally, change the page name -- and set person id
+            // Note:  "this.page" and "this.person" are bound above in the html area.
             me.page = hashPath[2];
             me.person = hashPath[3];
           }
