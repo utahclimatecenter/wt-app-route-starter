@@ -32,7 +32,8 @@
     "vaadin-date-picker": "vaadin/vaadin-date-picker#^2.0.3",
     "paper-dialog": "PolymerElements/paper-dialog#^2.0.0",
     "highcharts": "^6.0.3",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "iron-demo-helpers": "^2.0.0"
   },
   "resolutions": {
     "polymer": "^2.0.0"
