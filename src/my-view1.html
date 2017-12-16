@@ -20,6 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/wt-srch-bar/wt-srch-bar.html">
 <link rel="import" href="../bower_components/wt-bootstrap-styles/wt-bootstrap-styles.html">
+<link rel="import" href="../bower_components/wt-srch-grid/wt-srch-grid.html">
 
 <link rel="import" href="shared-styles.html">
 
@@ -171,47 +172,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
-<!--     <iron-ajax auto
-      handle-as="json"
-      url="/src/data/getDecisionTrees.php"
-      on-response="_handleResponse"></iron-ajax> -->
-
-<!--     <div class="card">
-      <wt-srch-bar
-        id="srch-bar"
-        filter-types-url="/src/data/wtSrchBar.php">
-      </wt-srch-bar> -->
       <div class="card">
-      <vaadin-grid on-active-item-changed="_onActiveItemChanged" id="grid" items="[[data]]" size="300" style="height: auto;">
+        <wt-srch-grid
+          id="wt-srch-grid"
+          title="wt-srch-grid example"
+          download-fields='{"name": "Name", "holiday": "Holiday", "sched_type":"Schedule Type", "lv_hours": "Leave Hours Entered"}'
+          column-array='[{
+                          "index": "index",
+                          "name": "address",
+                          "description": "Report Name",
+                          "href": "web-components/wt-app-route-starter",
+                          "hashpath": "main/report-view1/#-_id-#",
+                          "sort": "asc",
+                          "target": ""
+                        },
+                        {
+                          "index": "index",
+                          "name": "about",
+                          "description": "Description",
+                          "href": "",
+                          "sort": "asc",
+                          "target": ""
+                        }
+                        ]'
+          url="/web-components/wt-app-route-starter/src/data/flat_data.txt"
+          wt-srch-bar-filter-types-url="/web-components/wt-app-route-starter/src/data/master-combo.txt"
+          wt-srch-bar-default-srch="free-text"
+          wt-srch-bar-default-srch-label="Program Search"
+          wt-srch-bar-char-min-ajax="2">
+        </wt-srch-grid>
 
-        <template class="row-details">
-          <div class="details">
-            <a href="/src/#/start">
-              <img src="/src/expert.png" class=""></img>
-            </a>
-            <p>[[item.name]]!</p>
-            <a href="/src/#/view2">
-              <paper-icon-button icon="editor:mode-edit" class="icon-img-edit"></paper-icon-button>
-            </a>
-          </div>
-        </template>
-
-<!--         <vaadin-grid-column width="50px" flex-grow="0">
-          <template class="header">#</template>
-          <template>[[index]]</template>
-        </vaadin-grid-column> -->
-
-        <vaadin-grid-column>
-          <template class="header">Name</template>
-          <template>[[item.name]]</template>
-        </vaadin-grid-column>
-
-        <vaadin-grid-column>
-          <template class="header">Description</template>
-          <template>[[item.description]]</template>
-        </vaadin-grid-column>
-
-      </vaadin-grid>
     </div>
 
     <paper-dialog id="error-dialog" with-backdrop>
