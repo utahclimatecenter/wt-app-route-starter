@@ -1,9 +1,10 @@
 {"success": true,
     "payload": [
   {
-    "_id": "5a0cd08fcdda9335c05cdb7a",
+    "_id": "UT,AK,AS",
+    "__edit_unique_id__": "5a0cd08fcdda9335c05cdb7a",
     "index": 0,
-    "guid": "9cc8825d-9ef3-411b-9fc5-08f12581648e",
+    "guid": "UT",
     "isActive": false,
     "balance": "$2,790.94",
     "picture": "http://placehold.it/32x32",
@@ -48,6 +49,7 @@
   {
     "_id": "5a0cd08fa4b01805164c2883",
     "index": 1,
+    "__edit_unique_id__": "5a0cd08fa4b01805164c2883",
     "guid": "60a5ab0a-6603-449f-b1fc-497e7bd95161",
     "isActive": false,
     "balance": "$2,456.11",

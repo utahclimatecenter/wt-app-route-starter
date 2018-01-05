@@ -205,24 +205,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="drawer-content">
         <wt-srch-grid
           id="wt-srch-grid"
-          title="wt-srch-grig example"
+          title="Search Grid Example"
           download-fields='{"name": "Name", "holiday": "Holiday", "sched_type":"Schedule Type", "lv_hours": "Leave Hours Entered"}'
           column-array='[{
-                          "index": "index",
                           "name": "name",
                           "description": "Name",
                           "href": "web-components/wt-app-route-starter",
                           "hashpath": "person/person-view1/#-_id-#",
-                          "sort": "asc",
-                          "target": ""
+                          "sort": "",
+                          "target": "",
+                          "edit_bootstrap_class": "col-sm-6"
                         },
                         {
-                          "index": "index",
                           "name": "address",
                           "description": "Address",
                           "href": "",
-                          "sort": "asc",
-                          "target": ""
+                          "sort": "",
+                          "target": "",
+                          "edit_type": "combo",
+                          "edit_bootstrap_class": "col-sm-6",
+                          "edit_type_url": "/web-components/wt-app-route-starter/src/data/get-states-data.txt"
                         }
                         ]'
           url="/web-components/wt-app-route-starter/src/data/flat_data.txt"

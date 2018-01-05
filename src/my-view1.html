@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../bower_components/iron-icons/editor-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
@@ -102,7 +103,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
 
         --vaadin-grid-body-cell: {
-          height: 48px;
+          height: 100%;
           color: rgba(0, 0, 0, var(--dark-primary-opacity));
           font-size: 13px;
         };
@@ -175,31 +176,65 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="card">
         <wt-srch-grid
           id="wt-srch-grid"
-          title="wt-srch-grid example"
-          download-fields='{"name": "Name", "holiday": "Holiday", "sched_type":"Schedule Type", "lv_hours": "Leave Hours Entered"}'
+          title="Search Grid Example"
+          use-slot="false"
           column-array='[{
-                          "index": "index",
                           "name": "address",
                           "description": "Report Name",
                           "href": "web-components/wt-app-route-starter",
                           "hashpath": "main/report-view1/#-_id-#",
-                          "sort": "asc",
-                          "target": ""
+                          "edit_bootstrap_class": "col-md-4",
+                          "edit_type": "input"
                         },
                         {
-                          "index": "index",
-                          "name": "about",
-                          "description": "Description",
+                          "name": "guid",
+                          "description": "Guid",
                           "href": "",
-                          "sort": "asc",
-                          "target": ""
-                        }
-                        ]'
+                          "edit_bootstrap_class": "col-md-4",
+                          "edit_type": "combo",
+                          "edit_type_url": "/web-components/wt-app-route-starter/src/data/get-states-data.txt"
+                        },{
+                          "name": "_id",
+                          "description": "ID",
+                          "href": "",
+                          "edit_bootstrap_class": "col-md-4",
+                          "edit_type": "multi-combo",
+                          "edit_type_url": "/web-components/wt-app-route-starter/src/data/get-states-data.txt"
+                        }]'
           url="/web-components/wt-app-route-starter/src/data/flat_data.txt"
           wt-srch-bar-filter-types-url="/web-components/wt-app-route-starter/src/data/master-combo.txt"
           wt-srch-bar-default-srch="free-text"
           wt-srch-bar-default-srch-label="Program Search"
           wt-srch-bar-char-min-ajax="2">
+
+            <div slot="custom-edit-expand-slot">
+              <iron-form id="custom-edit-expand-slot-form">
+              <form method="get">
+              <table border="1px" width="100%">
+                <tr>
+                  <td><input id="address" name="address"></input></td>
+                  <td><vaadin-combo-box id="guid" name="guid"></vaadin-combo-box></td>
+                  <td><wt-vaadin-multi-combo id="_id" name="_id"></wt-vaadin-multi-combo></td>
+                </tr>
+              </table>
+              </form>
+              </iron-form>
+            </div>
+
+            <div slot="custom-add-expand-slot">
+              <iron-form id="custom-add-expand-slot-form">
+              <form method="get">
+              <table border="1px" width="100%">
+                <tr>
+                  <td><input id="address" name="address"></input></td>
+                  <td><vaadin-combo-box id="guid" name="guid"></vaadin-combo-box></td>
+                  <td><wt-vaadin-multi-combo id="_id" name="_id"></wt-vaadin-multi-combo></td>
+                </tr>
+              </table>
+              </form>
+              </iron-form>
+            </div>
+
         </wt-srch-grid>
 
     </div>
